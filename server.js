@@ -25,6 +25,6 @@ app.use(bodyParser.json());
 
 app.use('/',Authroute);
 
-app.listen(4000,'0.0.0.0',()=>{
+app.listen(4000,()=>{
     console.log("Listening on Port 4000");
 });

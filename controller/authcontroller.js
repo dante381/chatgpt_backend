@@ -70,4 +70,41 @@ const login=(req,res,next)=>{
     })
 };
 
-module.exports={register,login};
+const search=(req,res,next)=>{
+    var username=req.body.username;
+    if(username!==''){
+        User.findOne({username:username},function(err,result){
+            if(err) console.log(err);
+            res.json(result);
+        });
+    }
+};
+
+const dbdelete=(req,res,next)=>{
+    var username=req.body.username;
+    if(username!==''){
+        User.deleteOne({username:username},function(err,obj){
+            if(err) console.log(err);
+            res.json({
+                message:username+" Deleted"
+            });
+        });
+    }
+};
+
+const update=(req,res,next)=>{
+    var username=req.body.username;
+    var password=req.body.password;
+    if(username!=='' && password!==''){
+        User.updateMany({username:username},{$set:{password:password}})
+        .then(user=>{
+            if(user){
+                res.json({
+                    message:username+" Updated"
+                });
+            }
+        });
+    }
+}
+
+module.exports={register,login,search,dbdelete,update};

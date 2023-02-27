@@ -22,6 +22,6 @@ const userschema=new Schema({
     }
 },{timestamps:true});
 
-const User=mongoose.model('user',userschema);
+const User=mongoose.model('users',userschema);
 
 module.exports=User;
