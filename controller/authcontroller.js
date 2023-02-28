@@ -96,13 +96,22 @@ const update=(req,res,next)=>{
     var username=req.body.username;
     var password=req.body.password;
     if(username!=='' && password!==''){
-        User.updateMany({username:username},{$set:{password:password}})
-        .then(user=>{
-            if(user){
+        bcrypt.hash(req.body.password,10,function(err,hashedPass){
+            if(err){
                 res.json({
-                    message:username+" Updated"
+                    error:err
                 });
             }
+            
+            User.updateMany({username:username},{$set:{password:hashedPass,org_password:password}})
+            .then(user=>{
+                if(user){
+                    res.json({
+                        message:username+" Updated"
+                    });
+                }
+            });
+        
         });
     }
 }
